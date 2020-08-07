@@ -46,7 +46,7 @@ export class TodoService {
         if (!todo) {
             throw new HttpException(`Todo item doesn't exist`, HttpStatus.BAD_REQUEST);
         }
-        this.todos.filter(_todo => _todo.id !== id);
+        this.todos = this.todos.filter(_todo => _todo.id !== id);
         return toPromise(toTodoDto(todo));
     }
 }
