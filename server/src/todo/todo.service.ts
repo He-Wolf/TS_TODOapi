@@ -4,8 +4,6 @@ import { v4 as uuidv4 } from 'uuid';
 import { TodoEntity } from './todo-entity';
 import { TodoDto } from './todo-dto';
 import { TodoCreateDto } from './todo-create-dto';
-import { TodoListDto } from './todo-list-dto';
-import { toPromise } from '../shared/utils'
 import { AutoMapper, InjectMapper } from 'nestjsx-automapper';
 
 @Injectable()
