@@ -1,4 +1,8 @@
+import {AutoMap} from 'nestjsx-automapper'
+
 export class TodoCreateDto {
-    name: string; 
+    @AutoMap()
+    name: string;
+    @AutoMap()
     description?: string;
 }
