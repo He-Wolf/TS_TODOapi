@@ -1,4 +1,4 @@
-import { TodoCreateDto } from './todo-create-dto';
+import { TodoCreateDto } from './todo-create.dto';
 
 describe('TodoCreateDto', () => {
   it('should be defined', () => {

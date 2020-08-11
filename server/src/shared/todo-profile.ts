@@ -1,5 +1,5 @@
-import { TodoDto } from '../todo/todo-dto';
-import { TodoEntity } from '../todo/todo-entity';
+import { TodoDto } from '../todo/models/todo.dto';
+import { TodoEntity } from '../todo/models/todo.entity';
 import { AutoMapper, ProfileBase, Profile } from 'nestjsx-automapper';
 
 @Profile()

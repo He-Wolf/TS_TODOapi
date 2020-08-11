@@ -1,0 +1,6 @@
+{
+    "type": "sqlite",
+    "database": "nestapp",
+    "synchronize": "true",
+    "entities": ["src/**/*.entity.ts"]
+}
