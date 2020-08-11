@@ -2,7 +2,7 @@ import {AutoMap} from 'nestjsx-automapper'
 
 export class TodoDto {
     @AutoMap()
-    id: string;
+    id: number;
     @AutoMap()
     name: string;
     @AutoMap()
