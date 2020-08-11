@@ -1,8 +1,8 @@
 import {AutoMap} from 'nestjsx-automapper'
 
-export class TodoEntity {
+export class TodoDto {
     @AutoMap()
-    id: string;
+    id: number;
     @AutoMap()
     name: string;
     @AutoMap()

@@ -1,8 +1,7 @@
 import { Controller, Get, Post, Put, Delete, Param, Body } from '@nestjs/common';
-import { TodoListDto } from './todo-list-dto';
-import { TodoDto } from './todo-dto';
-import { TodoCreateDto } from './todo-create-dto';
-import { toPromise } from '../shared/utils'
+import { TodoListDto } from './models/todo-list.dto';
+import { TodoDto } from './models/todo.dto';
+import { TodoCreateDto } from './models/todo-create.dto';
 import { TodoService } from './todo.service'
 
 @Controller("api/todos")export class TodoController {
@@ -11,7 +10,7 @@ import { TodoService } from './todo.service'
     @Get()
     async findAll(): Promise<TodoListDto> {
       const todos = await this.todoService.getAllTodo();
-      return toPromise({ todos });
+      return { todos };
     }
     @Get(":id")
     async findOne(@Param("id") id: string): Promise<TodoDto> {
