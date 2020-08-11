@@ -25,10 +25,12 @@
     "@nestjs/core": "^7.0.0",
     "@nestjs/platform-express": "^7.0.0",
     "@types/uuid": "^8.0.1",
-    "nestjsx-automapper": "^3.0.21",
+    "nestjsx-automapper": "^3.0.22",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^6.5.4",
+    "sqlite3": "^5.0.0",
+    "typeorm": "^0.2.25",
     "uuid": "^8.3.0"
   },
   "devDependencies": {
