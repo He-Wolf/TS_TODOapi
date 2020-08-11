@@ -9,7 +9,6 @@ import { toPromise } from '../shared/utils'
 
 @Injectable()
 export class TodoService {
-    //todos: TodoEntity[] = todos;
 
     constructor(
         @InjectRepository(TodoEntity)
