@@ -9,9 +9,9 @@ import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
-    TodoModule,
     AutomapperModule.withMapper(),
     TypeOrmModule.forRoot(),
+    TodoModule,
     AuthModule,
     UserModule,
   ],

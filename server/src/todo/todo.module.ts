@@ -8,6 +8,7 @@ import  './todo.profile';
 @Module({
   imports: [TypeOrmModule.forFeature([TodoEntity])],
   controllers: [TodoController],
-  providers: [TodoService]
+  providers: [TodoService],
+  exports: [],
 })
 export class TodoModule {}

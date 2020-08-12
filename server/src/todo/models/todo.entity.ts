@@ -1,7 +1,7 @@
 import {AutoMap} from 'nestjsx-automapper';
 import {Entity, PrimaryGeneratedColumn, Column, BaseEntity} from "typeorm";
 
-@Entity()
+@Entity('todo')
 export class TodoEntity extends BaseEntity{
     @PrimaryGeneratedColumn('uuid')
     @AutoMap()

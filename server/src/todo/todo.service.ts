@@ -14,7 +14,6 @@ export class TodoService {
         private todoRepository: Repository<TodoEntity>,
         @InjectMapper()
         private readonly mapper: AutoMapper,
-
     ) { }
     
     async getAllTodo(): Promise<TodoDto[]>{
@@ -31,7 +30,11 @@ export class TodoService {
     }
     
     async createTodo(todoDto: TodoCreateDto): Promise<TodoDto>{
-        const todo: TodoEntity = this.todoRepository.create({ name: todoDto.name, description: todoDto.description, });
+        const todo: TodoEntity = this.todoRepository.create({
+            name: todoDto.name,
+            description: todoDto.description,
+        });
+        
         await this.todoRepository.save(todo);
         return this.mapper.map(todo, TodoDto, TodoEntity);
     }
