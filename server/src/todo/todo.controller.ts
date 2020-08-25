@@ -22,11 +22,11 @@ import { TodoService } from './todo.service'
     }
     @Put(":id")
     async update( @Param("id") id: string, @Body() todoDto: TodoDto ): Promise<TodoDto> {
-        return await this.todoService.updateTodo(id, todoDto);
+        return await this.todoService.modifyTodo(id, todoDto);
     }
     @Delete(":id")
     async destory( @Param("id") id: string): Promise<TodoDto> {
-        return await this.todoService.destoryTodo(id);
+        return await this.todoService.deleteTodo(id);
     }
 }
 

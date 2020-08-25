@@ -6,7 +6,6 @@ import { AutomapperModule } from 'nestjsx-automapper';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
-import configuration from './;
 
 @Module({
   imports: [

@@ -2,7 +2,7 @@ import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UserDto } from './models/user.dto';
-import { UserEntity } from './models/user.entity';
+import { UserEntity } from './entities/user.entity';
 import { UserLoginDto } from './models/user-login.dto';
 import { UserCreateDto } from './models/user-create.dto';
 import { AutoMapper, InjectMapper } from 'nestjsx-automapper';
@@ -17,42 +17,75 @@ export class UserService {
         private readonly mapper: AutoMapper,
     ) {}
 
-    async findOneByEmail(email: string): Promise<UserDto> {
-        const user =  await this.userRepository.findOne({ where: { email } });    
+    async getUser(email: string): Promise<UserDto> {
+        const user =  await this.userRepository.findOne({ where: { email } });
+
+        if (!user) {
+            throw new HttpException('User not found', HttpStatus.UNAUTHORIZED);
+        }
+
         return this.mapper.map(user, UserDto, UserEntity);  
     }
 
-    async findOneByLogin({ username, password }: UserLoginDto): Promise<UserDto> {    
-        const user = await this.userRepository.findOne({ where: { username } });
+    async createUser(userDto: UserCreateDto): Promise<UserDto> {
+        const user: UserEntity =  await this.userRepository.findOne({ where: { email: userDto.email } });
+
+        if (user) {
+            throw new HttpException('User already exists', HttpStatus.BAD_REQUEST);
+        }
+    
+        const newUser: UserEntity = this.userRepository.create({
+            email: userDto.email,
+            username: userDto.username,
+            password: userDto.password,
+        });
+
+        const savedUser: UserEntity = await this.userRepository.save(newUser);
+
+        return this.mapper.map(savedUser, UserDto, UserEntity);
+    }
+    
+    async modifyUser(userDto: UserCreateDto): Promise<UserDto> {
+        let user: UserEntity =  await this.userRepository.findOne({ where: { email: userDto.email } });
+
+        if (user) {
+            throw new HttpException('User already exists', HttpStatus.BAD_REQUEST);
+        }
+
+        user.email = userDto.email;
+        user.password = userDto.password;
+        user.username = userDto.username;
+
+        const modifiedUser = await this.userRepository.save(user);
+
+        return this.mapper.map(modifiedUser, UserDto, UserEntity);
+    }
+    
+    async deleteUser(email: string): Promise<UserDto> {
+        const user = await this.userRepository.findOne({ where: { email } });
+
+        if (!user) {
+            throw new HttpException("User doesn't exist", HttpStatus.BAD_REQUEST);
+        }
+
+        const removedUser = await this.userRepository.remove(user);
+
+        return this.mapper.map(removedUser, UserDto, UserEntity);    
+    }
+    
+    async checkCredentials(userDto: UserLoginDto): Promise<boolean> {    
+        const user = await this.userRepository.findOne({ where: { email: userDto.email} });
         
         if (!user) {
             throw new HttpException('User not found', HttpStatus.UNAUTHORIZED);    
         }
           
-        const areEqual = await bcrypt.compare(password, user.password);
+        const ifCorrect: boolean = await bcrypt.compare(userDto.password, user.password);
         
-        if (!areEqual) {
-            throw new HttpException('Invalid credentials', HttpStatus.UNAUTHORIZED);    
+        if (!ifCorrect) {
+            throw new HttpException('Invalid credentials', HttpStatus.UNAUTHORIZED);
         }
-        
-        return this.mapper.map(user, UserDto, UserEntity);  
-    }
 
-    async create(userDto: UserCreateDto): Promise<UserDto> {    
-        // check if the user exists in the db
-        const userInDb = await this.findOneByEmail(userDto.email);
-        if (userInDb) {
-            throw new HttpException('User already exists', HttpStatus.BAD_REQUEST);
-        }
-    
-        const user: UserEntity = this.userRepository.create({
-            email: userDto.email,
-            username: userDto.username,
-            password: userDto.password,
-        });
-    
-        await this.userRepository.save(user);
-    
-        return this.mapper.map(user, UserDto, UserEntity);
-      }
+        return ifCorrect;
+    }
 }

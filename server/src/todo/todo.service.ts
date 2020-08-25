@@ -1,7 +1,7 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { TodoEntity } from './models/todo.entity';
+import { TodoEntity } from './entities/todo.entity';
 import { TodoDto } from './models/todo.dto';
 import { TodoCreateDto } from './models/todo-create.dto';
 import { AutoMapper, InjectMapper } from 'nestjsx-automapper';
@@ -30,31 +30,35 @@ export class TodoService {
     }
     
     async createTodo(todoDto: TodoCreateDto): Promise<TodoDto>{
-        const todo: TodoEntity = this.todoRepository.create({
+        let todo: TodoEntity = this.todoRepository.create({
             name: todoDto.name,
             description: todoDto.description,
         });
         
-        await this.todoRepository.save(todo);
+        todo = await this.todoRepository.save(todo);
         return this.mapper.map(todo, TodoDto, TodoEntity);
     }
 
-    async updateTodo(id: string, todoDto: TodoCreateDto): Promise<TodoDto>{
+    async modifyTodo(id: string, todoDto: TodoCreateDto): Promise<TodoDto>{
         let todo = await this.todoRepository.findOne(id);
         if (!todo) {
             throw new HttpException(`Todo item doesn't exist`, HttpStatus.BAD_REQUEST);
         }
-        await this.todoRepository.update(id, {name: todoDto.name, description: todoDto.description});
-        todo = await this.todoRepository.findOne(id);
+
+        todo.name = todoDto.name;
+        todo.description = todoDto.description;
+        todo = await this.todoRepository.save(todo);
+
         return this.mapper.map(todo, TodoDto, TodoEntity);
     }
 
-    async destoryTodo(id: string): Promise<TodoDto>{
-        const todo = await this.todoRepository.findOne(id);
+    async deleteTodo(id: string): Promise<TodoDto>{
+        let todo = await this.todoRepository.findOne(id);
         if (!todo) {
             throw new HttpException(`Todo item doesn't exist`, HttpStatus.BAD_REQUEST);
         }
-        await this.todoRepository.delete(todo)
+
+        todo = await this.todoRepository.remove(todo);
         return this.mapper.map(todo, TodoDto, TodoEntity);
     }
 }

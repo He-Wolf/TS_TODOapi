@@ -1,13 +1,11 @@
 {
     "PassportModule" : {
-        "defaultStrategy": "jwt",
-        "property": "user",
-        "session": "false"
+        "defaultStrategy": "jwt"
     },
     "JwtModule" : {
         "secret": "mysecretkey",
         "signOptions": {
-            "expiresIn": 3000
+            "expiresIn": "60s"
         }
     }
 }
