@@ -1,38 +1,59 @@
-import { Controller, Get, Post, Put, Delete, Param, Body, UseGuards } from '@nestjs/common';
-import { TodoListDto } from './models/todo-list.dto';
+import { Controller, Get, Post, Put, Delete, Param, Body, Request, UseGuards } from '@nestjs/common';
 import { TodoDto } from './models/todo.dto';
+import { TodoEntity } from './entities/todo.entity';
 import { TodoCreateDto } from './models/todo-create.dto';
 import { TodoService } from './todo.service';
 import { JwtAuthGuard  } from '../auth/jwt-auth.guard';
+import { UserService } from 'src/user/user.service';
+import { AutoMapper, InjectMapper } from 'nestjsx-automapper';
 
 @Controller("api/todos")export class TodoController {
-    constructor(private readonly todoService: TodoService) {}
+    constructor(
+        private readonly todoService: TodoService,
+        private readonly userService: UserService,
+        @InjectMapper()
+        private readonly mapper: AutoMapper,
+    ) {}
     
     @Get()
     @UseGuards(JwtAuthGuard)
-    async findAll(): Promise<TodoListDto> {
-      const todos = await this.todoService.getAllTodo();
-      return { todos };
+    async findAll(@Request() req): Promise<TodoDto[]> {
+        const user = await this.userService.getUser(req.user.email);
+        const todos = await this.todoService.getAllTodo(user);
+
+        return this.mapper.mapArray(todos, TodoDto, TodoEntity);
     }
     @Get(":id")
     @UseGuards(JwtAuthGuard)
-    async findOne(@Param("id") id: string): Promise<TodoDto> {
-        return await this.todoService.getOneTodo(id);
+    async findOne(@Request() req, @Param("id") id: string): Promise<TodoDto> {
+        const user = await this.userService.getUser(req.user.email);
+        const todo = await this.todoService.getOneTodo(id, user);
+
+        return this.mapper.map(todo, TodoDto, TodoEntity);
     }
     @Post()
     @UseGuards(JwtAuthGuard)
-    async create(@Body() todoCreateDto: TodoCreateDto): Promise<TodoDto> {
-        return await this.todoService.createTodo(todoCreateDto);
+    async create(@Request() req, @Body() todoCreateDto: TodoCreateDto): Promise<TodoDto> {
+        const user = await this.userService.getUser(req.user.email);
+        const todo = await this.todoService.createTodo(todoCreateDto, user);
+
+        return this.mapper.map(todo, TodoDto, TodoEntity);
     }
     @Put(":id")
     @UseGuards(JwtAuthGuard)
-    async update( @Param("id") id: string, @Body() todoDto: TodoCreateDto ): Promise<TodoDto> {
-        return await this.todoService.modifyTodo(id, todoDto);
+    async update(@Request() req, @Param("id") id: string, @Body() todoDto: TodoCreateDto ): Promise<TodoDto> {
+        const user = await this.userService.getUser(req.user.email);
+        const todo = await this.todoService.modifyTodo(id, todoDto, user);
+
+        return this.mapper.map(todo, TodoDto, TodoEntity);
     }
     @Delete(":id")
     @UseGuards(JwtAuthGuard)
-    async destory( @Param("id") id: string): Promise<TodoDto> {
-        return await this.todoService.deleteTodo(id);
+    async destory(@Request() req, @Param("id") id: string): Promise<TodoDto> {
+        const user = await this.userService.getUser(req.user.email);
+        const todo = await this.todoService.deleteTodo(id, user);
+
+        return this.mapper.map(todo, TodoDto, TodoEntity);
     }
 }
 

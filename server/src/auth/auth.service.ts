@@ -2,7 +2,7 @@ import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { JwtPayload } from './interfaces/payload.interface';
 import { Token } from './interfaces/token.interface';
 import { Message } from './interfaces/message.interface';
-import { UserDto } from '../user/models/user.dto';
+import { UserEntity } from '../user/entities/user.entity';
 import { UserLoginDto } from '../user/models/user-login.dto';
 import { UserCreateDto } from '../user/models/user-create.dto';
 import { JwtService } from '@nestjs/jwt';
@@ -18,7 +18,7 @@ export class AuthService {
 
   async register(userDto: UserCreateDto): Promise<Message> {
     // create user
-    const user: UserDto = await this.userService.createUser(userDto);
+    const user: UserEntity = await this.userService.createUser(userDto);
     
     if(!user) {
       return {success: false, data: "Registration failed"}

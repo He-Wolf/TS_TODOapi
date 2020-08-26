@@ -1,5 +1,6 @@
-import {AutoMap} from 'nestjsx-automapper';
-import {Entity, PrimaryGeneratedColumn, Column, BaseEntity} from "typeorm";
+import { AutoMap } from 'nestjsx-automapper';
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, ManyToOne } from "typeorm";
+import { UserEntity } from '../../user/entities/user.entity';
 
 @Entity('todo')
 export class TodoEntity extends BaseEntity{
@@ -20,4 +21,11 @@ export class TodoEntity extends BaseEntity{
     }) 
     @AutoMap()
     description?: string;
+
+    @ManyToOne(
+        type => UserEntity,
+        user => user.todos,
+        {onDelete: 'CASCADE'}
+    )
+    user: UserEntity;
 }

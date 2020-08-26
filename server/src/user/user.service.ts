@@ -1,11 +1,9 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { UserDto } from './models/user.dto';
 import { UserEntity } from './entities/user.entity';
 import { UserLoginDto } from './models/user-login.dto';
 import { UserCreateDto } from './models/user-create.dto';
-import { AutoMapper, InjectMapper } from 'nestjsx-automapper';
 import * as bcrypt from 'bcrypt'
 
 @Injectable()
@@ -13,22 +11,20 @@ export class UserService {
     constructor(
         @InjectRepository(UserEntity)    
         private readonly userRepository: Repository<UserEntity>,
-        @InjectMapper()
-        private readonly mapper: AutoMapper,
     ) {}
 
-    async getUser(email: string): Promise<UserDto> {
+    async getUser(email: string): Promise<UserEntity> {
         const user =  await this.userRepository.findOne({ where: { email } });
 
         if (!user) {
             throw new HttpException('User not found', HttpStatus.BAD_REQUEST);
         }
 
-        return this.mapper.map(user, UserDto, UserEntity);  
+        return user; 
     }
 
-    async createUser(userDto: UserCreateDto): Promise<UserDto> {
-        const user: UserEntity =  await this.userRepository.findOne({ where: { email: userDto.email } });
+    async createUser(userDto: UserCreateDto): Promise<UserEntity> {
+        let user: UserEntity =  await this.userRepository.findOne({ where: { email: userDto.email } });
 
         if (user) {
             throw new HttpException('User already exists', HttpStatus.BAD_REQUEST);
@@ -40,12 +36,12 @@ export class UserService {
             password: userDto.password,
         });
 
-        const savedUser: UserEntity = await this.userRepository.save(newUser);
+        user = await this.userRepository.save(newUser);
 
-        return this.mapper.map(savedUser, UserDto, UserEntity);
+        return user;
     }
     
-    async modifyUser(email: string, userDto: UserCreateDto): Promise<UserDto> {
+    async modifyUser(email: string, userDto: UserCreateDto): Promise<UserEntity> {
         let user: UserEntity =  await this.userRepository.findOne({ where: { email } });
 
         if (!user) {
@@ -56,21 +52,21 @@ export class UserService {
         user.password = userDto.password;
         user.username = userDto.username;
 
-        const modifiedUser = await this.userRepository.save(user);
+        user = await this.userRepository.save(user);
 
-        return this.mapper.map(modifiedUser, UserDto, UserEntity);
+        return user;
     }
     
-    async deleteUser(email: string): Promise<UserDto> {
-        const user = await this.userRepository.findOne({ where: { email } });
+    async deleteUser(email: string): Promise<UserEntity> {
+        let user = await this.userRepository.findOne({ where: { email } });
 
         if (!user) {
             throw new HttpException("User doesn't exist", HttpStatus.BAD_REQUEST);
         }
 
-        const removedUser = await this.userRepository.remove(user);
+        user = await this.userRepository.remove(user);
 
-        return this.mapper.map(removedUser, UserDto, UserEntity);    
+        return user;    
     }
     
     async checkCredentials(userDto: UserLoginDto): Promise<boolean> {    

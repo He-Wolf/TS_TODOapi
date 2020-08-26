@@ -1,6 +1,7 @@
-import {AutoMap} from 'nestjsx-automapper';
-import {Entity, PrimaryGeneratedColumn, Column, BeforeInsert, BeforeUpdate} from 'typeorm'
-import * as bcrypt from 'bcrypt'
+import { AutoMap } from 'nestjsx-automapper';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, BeforeInsert, BeforeUpdate } from 'typeorm';
+import * as bcrypt from 'bcrypt';
+import { TodoEntity } from '../../todo/entities/todo.entity';
 
 @Entity('user')
 export class UserEntity {
@@ -28,7 +29,14 @@ export class UserEntity {
         nullable: false
     })   
     @AutoMap() 
-    password: string;  
+    password: string;
+
+    @OneToMany(
+        type => TodoEntity,
+        todo => todo.user,
+        {cascade: true}
+    )
+    todos: TodoEntity[];
 
     @BeforeInsert()
     @BeforeUpdate()
