@@ -1,4 +1,4 @@
-import { Injectable, HttpException, HttpStatus, Logger } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { TodoEntity } from './entities/todo.entity';
@@ -41,8 +41,6 @@ export class TodoService {
 
     async modifyTodo(id: string, todoDto: TodoCreateDto): Promise<TodoDto>{
         let todo = await this.todoRepository.findOne(id);
-        Logger.log(todoDto,"modifyTodo");
-        Logger.log(todo,"modifyTodo");
 
         if (!todo) {
             throw new HttpException(`Todo item doesn't exist`, HttpStatus.BAD_REQUEST);
@@ -51,7 +49,6 @@ export class TodoService {
         todo.name = todoDto.name;
         todo.description = todoDto.description;
 
-        Logger.log(todo,"modifyTodo");
         await this.todoRepository.save(todo);
 
         return this.mapper.map(todo, TodoDto, TodoEntity);

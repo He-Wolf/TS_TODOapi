@@ -21,7 +21,7 @@ export class UserService {
         const user =  await this.userRepository.findOne({ where: { email } });
 
         if (!user) {
-            throw new HttpException('User not found', HttpStatus.UNAUTHORIZED);
+            throw new HttpException('User not found', HttpStatus.BAD_REQUEST);
         }
 
         return this.mapper.map(user, UserDto, UserEntity);  
@@ -45,11 +45,11 @@ export class UserService {
         return this.mapper.map(savedUser, UserDto, UserEntity);
     }
     
-    async modifyUser(userDto: UserCreateDto): Promise<UserDto> {
-        let user: UserEntity =  await this.userRepository.findOne({ where: { email: userDto.email } });
+    async modifyUser(email: string, userDto: UserCreateDto): Promise<UserDto> {
+        let user: UserEntity =  await this.userRepository.findOne({ where: { email } });
 
-        if (user) {
-            throw new HttpException('User already exists', HttpStatus.BAD_REQUEST);
+        if (!user) {
+            throw new HttpException("User doesn't exist", HttpStatus.BAD_REQUEST);
         }
 
         user.email = userDto.email;

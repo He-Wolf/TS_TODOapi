@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Put, Delete, Param, Body, UseGuards, Logger } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Param, Body, UseGuards } from '@nestjs/common';
 import { TodoListDto } from './models/todo-list.dto';
 import { TodoDto } from './models/todo.dto';
 import { TodoCreateDto } from './models/todo-create.dto';
@@ -27,8 +27,6 @@ import { JwtAuthGuard  } from '../auth/jwt-auth.guard';
     @Put(":id")
     @UseGuards(JwtAuthGuard)
     async update( @Param("id") id: string, @Body() todoDto: TodoCreateDto ): Promise<TodoDto> {
-        Logger.log(id, "update");
-        Logger.log(todoDto, "update");
         return await this.todoService.modifyTodo(id, todoDto);
     }
     @Delete(":id")

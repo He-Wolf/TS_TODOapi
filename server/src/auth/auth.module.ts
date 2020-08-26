@@ -10,7 +10,7 @@ import { AuthConfig } from './configs/auth.config';
 @Module({
   imports: [
     UserModule,
-    PassportModule.register( AuthConfig.PassportModule),
+    PassportModule.register(AuthConfig.PassportModule),
     JwtModule.register(AuthConfig.JwtModule),
   ],
   controllers: [AuthController],
