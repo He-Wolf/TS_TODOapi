@@ -6,6 +6,8 @@ import { UserDto } from '../user/models/user.dto';
 import { JwtAuthGuard  } from '../auth/jwt-auth.guard';
 import { AutoMapper, InjectMapper } from 'nestjsx-automapper';
 
+
+@UseGuards(JwtAuthGuard)
 @Controller('profile')
 export class UserController {
     constructor(
@@ -15,7 +17,6 @@ export class UserController {
     ) {}
 
     @Get('display')
-    @UseGuards(JwtAuthGuard)
     public async display(@Request() req): Promise<UserDto> {
         const user = await this.userService.getUser(req.user.email);
 
@@ -23,7 +24,6 @@ export class UserController {
     }
 
     @Put('edit')
-    @UseGuards(JwtAuthGuard)
     public async edit(@Request() req, @Body() userDto: UserCreateDto): Promise<UserDto> {
         const user = await this.userService.modifyUser(req.user.email, userDto);
 
@@ -31,7 +31,6 @@ export class UserController {
     }
 
     @Delete('delete')
-    @UseGuards(JwtAuthGuard)
     public async delete(@Request() req): Promise<UserDto> {
         const user = await this.userService.deleteUser(req.user.email);
 
