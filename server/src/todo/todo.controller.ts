@@ -1,30 +1,38 @@
-import { Controller, Get, Post, Put, Delete, Param, Body } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Param, Body, UseGuards, Logger } from '@nestjs/common';
 import { TodoListDto } from './models/todo-list.dto';
 import { TodoDto } from './models/todo.dto';
 import { TodoCreateDto } from './models/todo-create.dto';
-import { TodoService } from './todo.service'
+import { TodoService } from './todo.service';
+import { JwtAuthGuard  } from '../auth/jwt-auth.guard';
 
 @Controller("api/todos")export class TodoController {
     constructor(private readonly todoService: TodoService) {}
     
     @Get()
+    @UseGuards(JwtAuthGuard)
     async findAll(): Promise<TodoListDto> {
       const todos = await this.todoService.getAllTodo();
       return { todos };
     }
     @Get(":id")
+    @UseGuards(JwtAuthGuard)
     async findOne(@Param("id") id: string): Promise<TodoDto> {
         return await this.todoService.getOneTodo(id);
     }
     @Post()
+    @UseGuards(JwtAuthGuard)
     async create(@Body() todoCreateDto: TodoCreateDto): Promise<TodoDto> {
         return await this.todoService.createTodo(todoCreateDto);
     }
     @Put(":id")
-    async update( @Param("id") id: string, @Body() todoDto: TodoDto ): Promise<TodoDto> {
+    @UseGuards(JwtAuthGuard)
+    async update( @Param("id") id: string, @Body() todoDto: TodoCreateDto ): Promise<TodoDto> {
+        Logger.log(id, "update");
+        Logger.log(todoDto, "update");
         return await this.todoService.modifyTodo(id, todoDto);
     }
     @Delete(":id")
+    @UseGuards(JwtAuthGuard)
     async destory( @Param("id") id: string): Promise<TodoDto> {
         return await this.todoService.deleteTodo(id);
     }

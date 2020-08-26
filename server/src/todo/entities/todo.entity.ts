@@ -5,13 +5,19 @@ import {Entity, PrimaryGeneratedColumn, Column, BaseEntity} from "typeorm";
 export class TodoEntity extends BaseEntity{
     @PrimaryGeneratedColumn('uuid')
     @AutoMap()
-    id: number;
+    id: string;
 
-    @Column("text")
+    @Column({
+        type: 'text',
+        nullable: false
+    }) 
     @AutoMap()
     name: string;
     
-    @Column("text")
+    @Column({
+        type: 'text',
+        nullable: true
+    }) 
     @AutoMap()
     description?: string;
 }

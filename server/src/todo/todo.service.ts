@@ -1,4 +1,4 @@
-import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { TodoEntity } from './entities/todo.entity';
@@ -30,24 +30,29 @@ export class TodoService {
     }
     
     async createTodo(todoDto: TodoCreateDto): Promise<TodoDto>{
-        let todo: TodoEntity = this.todoRepository.create({
-            name: todoDto.name,
-            description: todoDto.description,
-        });
+        let todo = new TodoEntity();
+        todo.name = todoDto.name;
+        todo.description = todoDto.description;
         
-        todo = await this.todoRepository.save(todo);
+        await this.todoRepository.save(todo);
+
         return this.mapper.map(todo, TodoDto, TodoEntity);
     }
 
     async modifyTodo(id: string, todoDto: TodoCreateDto): Promise<TodoDto>{
         let todo = await this.todoRepository.findOne(id);
+        Logger.log(todoDto,"modifyTodo");
+        Logger.log(todo,"modifyTodo");
+
         if (!todo) {
             throw new HttpException(`Todo item doesn't exist`, HttpStatus.BAD_REQUEST);
         }
 
         todo.name = todoDto.name;
         todo.description = todoDto.description;
-        todo = await this.todoRepository.save(todo);
+
+        Logger.log(todo,"modifyTodo");
+        await this.todoRepository.save(todo);
 
         return this.mapper.map(todo, TodoDto, TodoEntity);
     }
@@ -58,7 +63,7 @@ export class TodoService {
             throw new HttpException(`Todo item doesn't exist`, HttpStatus.BAD_REQUEST);
         }
 
-        todo = await this.todoRepository.remove(todo);
+        await this.todoRepository.remove(todo);
         return this.mapper.map(todo, TodoDto, TodoEntity);
     }
 }
