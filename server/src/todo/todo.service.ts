@@ -3,7 +3,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { TodoEntity } from './entities/todo.entity';
 import { TodoCreateDto } from './models/todo-create.dto';
-import { AutoMapper, InjectMapper } from 'nestjsx-automapper';
 import { UserEntity } from 'src/user/entities/user.entity';
 
 @Injectable()
@@ -11,9 +10,7 @@ export class TodoService {
 
     constructor(
         @InjectRepository(TodoEntity)
-        private todoRepository: Repository<TodoEntity>,
-        @InjectMapper()
-        private readonly mapper: AutoMapper,
+        private todoRepository: Repository<TodoEntity>
     ) { }
     
     async getAllTodo(user: UserEntity): Promise<TodoEntity[]>{
@@ -36,6 +33,7 @@ export class TodoService {
         let todo = new TodoEntity();
 
         todo.name = todoDto.name;
+        todo.isDone = todoDto.isDone;
         todo.description = todoDto.description;
         todo.user = user;
         
@@ -52,6 +50,7 @@ export class TodoService {
         }
 
         todo.name = todoDto.name;
+        todo.isDone = todoDto.isDone;
         todo.description = todoDto.description;
 
         todo = await this.todoRepository.save(todo);
