@@ -1,4 +1,4 @@
-import {AutoMap} from 'nestjsx-automapper'
+import { AutoMap } from 'nestjsx-automapper';
 
 export class TodoDto {
     @AutoMap()
@@ -6,7 +6,10 @@ export class TodoDto {
 
     @AutoMap()
     name: string;
-    
+
+    @AutoMap()
+    isDone: boolean;
+
     @AutoMap()
     description?: string;
 }

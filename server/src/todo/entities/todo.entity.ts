@@ -14,6 +14,13 @@ export class TodoEntity extends BaseEntity{
     }) 
     @AutoMap()
     name: string;
+
+    @Column({
+        type: 'boolean',
+        nullable: false
+    }) 
+    @AutoMap()
+    isDone: boolean;
     
     @Column({
         type: 'text',

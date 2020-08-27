@@ -1,17 +1,23 @@
-import { IsNotEmpty, IsEmail } from 'class-validator';
-import {AutoMap} from 'nestjsx-automapper'
+import { IsNotEmpty, IsEmail, MaxLength, Matches } from 'class-validator';
+import {Compare} from '../compare.decorator';
 
 export class UserCreateDto {
     @IsNotEmpty()
     @IsEmail()
-    @AutoMap()
     email: string;
 
     @IsNotEmpty()
-    @AutoMap()
+    @MaxLength(30)
     username: string;
 
     @IsNotEmpty()
-    @AutoMap()
+    //minimum eight, maximum twenty characters,
+    //at least one uppercase letter and one lowercase letter,
+    //at least one number and one special character
+    @Matches(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[\W]).{8,20}$/)
     password: string;
+
+    @IsNotEmpty()
+    @Compare('password')
+    passwordConfirm: string;
 }
