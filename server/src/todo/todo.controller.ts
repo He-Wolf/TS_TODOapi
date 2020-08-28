@@ -6,8 +6,10 @@ import { TodoService } from './todo.service';
 import { JwtAuthGuard  } from '../auth/jwt-auth.guard';
 import { UserService } from 'src/user/user.service';
 import { AutoMapper, InjectMapper } from 'nestjsx-automapper';
+import { ApiBearerAuth } from '@nestjs/swagger';
 
 
+@ApiBearerAuth()
 @UseGuards(JwtAuthGuard)
 @Controller("api/todos")export class TodoController {
     constructor(

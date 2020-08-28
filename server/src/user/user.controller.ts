@@ -5,8 +5,10 @@ import { UserCreateDto } from '../user/models/user-create.dto';
 import { UserDto } from '../user/models/user.dto';
 import { JwtAuthGuard  } from '../auth/jwt-auth.guard';
 import { AutoMapper, InjectMapper } from 'nestjsx-automapper';
+import { ApiBearerAuth } from '@nestjs/swagger';
 
 
+@ApiBearerAuth()
 @UseGuards(JwtAuthGuard)
 @Controller('profile')
 export class UserController {
