@@ -1,13 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { JwtPayload } from './interfaces/payload.interface';
-import { Token } from './interfaces/token.interface';
-import { Message } from './interfaces/message.interface';
 import { UserEntity } from '../user/entities/user.entity';
 import { UserLoginDto } from '../user/models/user-login.dto';
 import { UserCreateDto } from '../user/models/user-create.dto';
+import { Token } from './models/token.dto';
 import { JwtService } from '@nestjs/jwt';
 import { UserService } from '../user/user.service';
-import { AuthConfig } from './configs/auth.config';
 
 @Injectable()
 export class AuthService {
@@ -15,35 +13,37 @@ export class AuthService {
     private readonly userService: UserService,
     private readonly jwtService: JwtService,
   ) {}
-
-  async register(userDto: UserCreateDto): Promise<Message> {
+  
+  async register(userDto: UserCreateDto): Promise<string> {
     // create user
     const user: UserEntity = await this.userService.createUser(userDto);
     
     if(!user) {
-      return {success: false, data: "Registration failed"}
+      throw new HttpException(`Registration failed`, HttpStatus.BAD_REQUEST);
     }
+    
+    const token : string = this._createToken({email: userDto.email});
 
-    const token : Token = this._createToken({email: userDto.email});
-    return {success: true, data: token};
+    return token;
   }
 
-  async login(userDto: UserLoginDto): Promise<Message> {
+  async login(userDto: UserLoginDto): Promise<string> {
     // check credentials
     const status: boolean = await this.userService.checkCredentials(userDto);
 
     if(!status) {
-    return {success: false, data: "Login failed"}
+    throw new HttpException(`Login failed`, HttpStatus.BAD_REQUEST);
     }
     
-    const token : Token = this._createToken({email: userDto.email});
-    return {success: true, data: token};
+    const token : string = this._createToken({email: userDto.email});
+
+    return token;
   }
   
-  private _createToken(payload: JwtPayload): Token {
-    const expiresIn : string = AuthConfig.JwtModule.signOptions.expiresIn;
+  private _createToken(payload: JwtPayload): string {
 
     const accessToken : string = this.jwtService.sign(payload);
-    return { expiresIn, accessToken };
+
+    return accessToken;
   }
 }
