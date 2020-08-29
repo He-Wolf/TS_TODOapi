@@ -2,7 +2,7 @@ import { Controller, Body, Post } from '@nestjs/common';
 import { UserCreateDto } from '../user/models/user-create.dto';
 import { UserLoginDto } from '../user/models/user-login.dto';
 import { Token } from './models/token.dto';
-import { UnauthorizedResponse, BadRequestResponse } from "../shared/exception-responses.dto"
+import { UnauthorizedResponse, BadRequestResponse } from "../shared/exception-responses.dto";
 import { AuthService } from './auth.service';
 import { 
   ApiCreatedResponse,
@@ -10,10 +10,12 @@ import {
   ApiBadRequestResponse,
   ApiOperation,
   ApiProduces,
-  ApiConsumes
+  ApiConsumes,
+  ApiTags
 } from '@nestjs/swagger';
 
 
+@ApiTags("auth")
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}

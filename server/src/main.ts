@@ -20,7 +20,7 @@ async function bootstrap() {
 
   const options = new DocumentBuilder()
     .setTitle('Todo NestJS web API')
-    .setDescription('This is a web API built using Típescript and NestJS framework.')
+    .setDescription('This is a web API built using Typescript and NestJS framework.')
     .setVersion('1.0')
     .addTag('todos')
     .addBearerAuth()

@@ -2,18 +2,18 @@ import { IsNotEmpty, IsOptional, MaxLength, IsBoolean, IsString } from 'class-va
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class TodoCreateDto {
-    @ApiProperty()
+    @ApiProperty({ example: "To clean the house" })
     @IsNotEmpty()
     @MaxLength(20)
     @IsString()
     name: string;
 
-    @ApiProperty()
+    @ApiProperty({ example: false })
     @IsNotEmpty()
     @IsBoolean()
     isDone: boolean;
 
-    @ApiPropertyOptional()
+    @ApiPropertyOptional({ example: "living room, kitchen, bathroom" })
     @IsOptional()    
     @MaxLength(50)
     @IsString()
