@@ -20,6 +20,7 @@ The API uses:
 - node.js (NestJS) RESTful API
 - Typescript
 - JWT for authentication
+
 If any question, please do not hesitate to contact me.
 ## 2. Used versions <a name="used-versions"></a>
 **1. Frameworks**
@@ -38,14 +39,22 @@ If any question, please do not hesitate to contact me.
 - Windows 10 as OS
 ## 4. Used packages <a name="used-packages"></a>
 **1. Backend:**
+- nestjs: 7.0.0
 - express: 4.17.1,
-- mongoose: 5.8.7,
-- bcryptjs: 2.4.3,
-- cors: 2.8.5,
-- jsonwebtoken: 8.5.1,
-- body-parser: 1.19.0,
+- bcrypt: 5.0.0,
+- class-transformer: 0.3.1,
+- class-validator: 0.12.2,
+- compression: 1.7.4,
+- helmet: 4.1.0,
+- nestjsx-automapper: 3.0.22,
 - passport: 0.4.1,
-- passport-jwt: 4.0.0
+- passport-jwt: 4.0.0,
+- reflect-metadata: 0.1.13,
+- rimraf: 3.0.2,
+- rxjs: 6.5.4,
+- sqlite3: 5.0.0,
+- swagger-ui-express: 4.1.4,
+- typeorm: 0.2.25
 ## 5. How to run the API <a name="how-to-run-the-api"></a>
 ### 5.1. Build and run with Docker <a name="build-and-run-with-docker"></a>
 - download and install Docker and Docker-Compose
