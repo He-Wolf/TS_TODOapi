@@ -23,14 +23,13 @@ The API uses:
 If any question, please do not hesitate to contact me.
 ## 2. Used versions <a name="used-versions"></a>
 **1. Frameworks**
-- Express.js: 4.17.1
-- Angular: 9.1.4
+- Nest.js: v7.0.0
 
 **2. Runtime:**
-- node.js runtime: 12.16.3
+- node.js runtime: v12.18.3
 
 **3. Database:**
-- MongoDB: 4.2.6
+- SQLite: v3
 ## 3. Used tools <a name="used-tools"></a>
 - Postman for API testing
 - Git Extensions as git gui
@@ -47,16 +46,6 @@ If any question, please do not hesitate to contact me.
 - body-parser: 1.19.0,
 - passport: 0.4.1,
 - passport-jwt: 4.0.0
-
-**2. Frontend (except Angular packages):**
-- @auth0/angular-jwt: 3.0.1,
-- angular2-flash-messages: 3.0.1,
-- bootstrap: 4.4.1,
-- jquery: 3.5.0,
-- popper.js: 1.16.1,
-- rxjs: 6.5.5,
-- tslib: 1.10.0,
-- zone.js: 0.10.2
 ## 5. How to run the API <a name="how-to-run-the-api"></a>
 ### 5.1. Build and run with Docker <a name="build-and-run-with-docker"></a>
 - download and install Docker and Docker-Compose
