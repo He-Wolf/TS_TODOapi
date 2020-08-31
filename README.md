@@ -23,7 +23,7 @@ The API uses:
 
 If any question, please do not hesitate to contact me.
 ## 2. Used versions <a name="used-versions"></a>
-**1. Frameworks**
+**1. Framework**
 - Nest.js: v7.0.0
 
 **2. Runtime:**
@@ -38,7 +38,6 @@ If any question, please do not hesitate to contact me.
 - Docker for containerization
 - Windows 10 as OS
 ## 4. Used packages <a name="used-packages"></a>
-**1. Backend:**
 - nestjs: 7.0.0,
 - express: 4.17.1,
 - bcrypt: 5.0.0,
@@ -76,22 +75,20 @@ If any question, please do not hesitate to contact me.
 ### 6.1. Exception/error handling <a name="exception-error-handling"></a>
 This application needs to be extended with exception handling. There are some already known issues which may cause error when it is not used correctly. I only tested the app with correct input values.
 ## 7. Some further development possibilities <a name="some-further-development-possibilities"></a>
-- add possibility to modify and delete account
+- token refreshing
 - Facebook authentication
+- Angular frontend
+- automated unit and integration tests
 - adding roles (admin, user)
 ## 8. Resources <a name="resources"></a>
 There are several online source which I used to create this web app.\
 Including but not limited to:
-- Angular:
-	- https://angular.io/docs
-- Tutorialspoint:
-	- https://www.tutorialspoint.com/nodejs/index.htm
-	- https://www.tutorialspoint.com/expressjs/
-	- https://www.tutorialspoint.com/mongodb/index.htm
-	- https://www.tutorialspoint.com/bootstrap4/bootstrap4_layout.htm
-	- https://www.tutorialspoint.com/typescript/index.htm
-	- https://www.tutorialspoint.com/angular7/index.htm
-- Traversy Media:
-	- https://www.youtube.com/watch?v=uONz0lEWft0&list=PLillGF-RfqbZMNtaOXJQiDebNXjVapWPZ
+- https://docs.nestjs.com/
+- https://typeorm.io/
+- https://www.codemag.com/Article/1907081/Nest.js-Step-by-Step
+- https://medium.com/@kaushiksamanta23/nest-js-tutorial-series-part-1-introduction-setup-c87ba810ea9e
+- https://www.techiediaries.com/nestjs-tutorial-rest-api-crud/
+- https://codersera.com/blog/typeorm-with-nest-js-tutorial/
+- https://dev.to/abbasogaji/how-to-dockerize-your-nestjs-app-for-production-2lmf
 
 Thank to every hero on Stackoverflow and Github who helped me with their comments! (Not all heroes wear capes.)
