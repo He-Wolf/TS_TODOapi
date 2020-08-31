@@ -39,7 +39,7 @@ If any question, please do not hesitate to contact me.
 - Windows 10 as OS
 ## 4. Used packages <a name="used-packages"></a>
 **1. Backend:**
-- nestjs: 7.0.0
+- nestjs: 7.0.0,
 - express: 4.17.1,
 - bcrypt: 5.0.0,
 - class-transformer: 0.3.1,
@@ -57,31 +57,21 @@ If any question, please do not hesitate to contact me.
 - typeorm: 0.2.25
 ## 5. How to run the API <a name="how-to-run-the-api"></a>
 ### 5.1. Build and run with Docker <a name="build-and-run-with-docker"></a>
-- download and install Docker and Docker-Compose
+- download and install Docker
 - clone or download the content of the repository
 - open a terminal and navigate to the containing folder
-- write "docker-compose up --build" and press Enter
+- write "docker build -t todowebapi:v1 ." and press Enter
+- write "docker run -it --rm -p 3000:3000 todowebapi:v1" and press Enter
 ### 5.2. Build and run with SDK <a name="build-and-run-with-sdk"></a>
-
-- download and install node.js, MongoDB
+- download and install node.js
 - clone or download the content of the repository
-
-**MongoDB**
-- check if MongoDB server is running as a service
-
-**Backend**
-- open a terminal and navigate to the folder "express-server"
-- write "npm install" and press Enter
-- after package installation is finished, write "npm start" in the terminal and press Enter
-
-**Frontend**
-- open another terminal and navigate to the folder "angular-client"
+- open a terminal and navigate to the containing folder
 - write "npm install" and press Enter
 - after package installation is finished, write "npm start" in the terminal and press Enter
 ### 5.3. Test and stop <a name="test-and-stop"></a>
-- if no error message in the terminal, open your browser (recommended: latest Chrome, Firefox, Safari, Edge Chromium or Chromium) and open: http://localhost:4200
-- first register a user account, then log in and after that you can diplay your user data and also log out
-- after testing go back to the terminals and press "Ctrl+C" to stop the the backend and frontend as well
+- if no error message in the terminal, open your browser (recommended: latest Chrome, Firefox, Safari, Edge Chromium or Chromium) and open: http://localhost:3000/api
+- first register a user account, then log in and after that you can manage your TODO items and account
+- after testing go back to the terminals and press "Ctrl+C" to stop the web server
 ## 6. Limitations <a name="limitations"></a>
 ### 6.1. Exception/error handling <a name="exception-error-handling"></a>
 This application needs to be extended with exception handling. There are some already known issues which may cause error when it is not used correctly. I only tested the app with correct input values.
