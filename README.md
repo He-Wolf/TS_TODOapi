@@ -24,7 +24,7 @@ The API uses:
 
 If any question, please do not hesitate to contact me.
 ## 2. Used versions <a name="used-versions"></a>
-**1. Framework**
+**1. Framework:**
 - Nest.js: v7.0.0
 
 **2. Runtime:**
