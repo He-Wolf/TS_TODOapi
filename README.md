@@ -14,12 +14,11 @@
 8. [Resources](#resources)
 
 ## 1. Introduction <a name="introduction"></a>
-This is a basic MEAN stack (MongoDB, Express.js, Angular, Node.js) single-page web application project written in TypeScript. It is a simple user login/account management app with JWT authentication. You can register a new user account with your email address, name and password. After successful registration, you can log in and view your user data. This app was created for learning purpose, but is might be useful as a starting-point for other projects.
+This is a basic NestJS RESTful web API project written in TypeScript. You can manage your todo items with CRUD operations and it also has a simple user login/account management functionality with JWT authentication. You can register a new user account with your email address, username and password. After successful registration, you can log in and add, edit, remove and track TODO items. You can also edit your account data and delete your account. This app was created for learning purpose, but is might be useful as a starting-point for other projects.
 The API uses:
-- MongoDB (Mongoose) noSQL database
-- node.js (Express) RESTful API
-- Angular 9 (Typescript) SPA
-- Bootstrap 4 style
+- SQLite database + TypeORM
+- node.js (NestJS) RESTful API
+- Typescript
 - JWT for authentication
 If any question, please do not hesitate to contact me.
 ## 2. Used versions <a name="used-versions"></a>
