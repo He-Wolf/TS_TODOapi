@@ -76,7 +76,7 @@ If any question, please do not hesitate to contact me.
 The documentation of the API was created with OpenAPI/Swagger. When you run the app, you can navigate to http://localhost:3000/api. On this URL you can read the documentation, and you can also test the API. (You do not need additional tools such as Curl or Postman.)
 
 The app uses JWT authentication. It means that when you registered an account and got the token, you need to click to the "Authorize" button on the top right corner and insert "Bearer \<yourtoken\>".
-(e.g. Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJmMTUxNWEyZS04MjhlLTQ4MTktYmJkYy1kYTc0NDU0MDFjMzAiLCJqdGkiOiI4MzFiY2ZmZC0xNWMxLTQ5YzEtYWJiMy03NjYyNjU2YzMxYmYiLCJleHAiOjE1ODg2MzExMjQsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NTAwMCIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6NTAwMCJ9.qZCnKIzVth7hS6RrDxNXP3w12h-LeZptdV72eJYxsBw)
+(e.g. Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImV4YW1wbGVAZW1haWwuY29tIiwiaWF0IjoxNTk4ODYzNTQ2LCJleHAiOjE1OTg4NjM4NDZ9.iIJ00R1gkEZ7GmU_mwh_vsuEjCl-EPOeYMHQ3rCC30c)
 
 !Do not forget to put "Bearer" before your token!
 
